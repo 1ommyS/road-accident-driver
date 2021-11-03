@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import road.accident.driverservice.roadaccidentdriver.dto.CarDTO;
 import road.accident.driverservice.roadaccidentdriver.dto.DriverDTO;
+import road.accident.driverservice.roadaccidentdriver.entity.CarEntity;
+import road.accident.driverservice.roadaccidentdriver.entity.DriverEntity;
+import road.accident.driverservice.roadaccidentdriver.service.CarService;
 import road.accident.driverservice.roadaccidentdriver.service.DriverService;
 
 import java.util.List;
@@ -17,22 +21,22 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class DriverController {
-    private final DriverService service;
+public class CarController {
+    private final CarService service;
 
 
-    @GetMapping("/drivers/all")
-    public List<DriverDTO> getAllDrivers() {
-        return service.getAllDrivers();
+    @GetMapping("/cars/all")
+    public List<CarDTO> getAllCars(){
+        return service.getAllCars();
     }
 
-    @GetMapping("/driver/{id}")
-    public DriverDTO getDriverById(@PathVariable("id") Long id) {
-        return service.getDriverById(id);
+    @GetMapping("/car/{id}")
+    public CarDTO getCarById(@PathVariable("id") Long id) {
+        return service.getCarById(id);
     }
 
-    @PostMapping("/driver")
-    public void createDriver(@RequestBody DriverDTO dto) {
+    @PostMapping("/car")
+    public void buyCar(@RequestBody CarDTO dto){
         service.create(dto);
     }
 

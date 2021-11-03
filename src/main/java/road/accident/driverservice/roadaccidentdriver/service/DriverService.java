@@ -10,47 +10,33 @@ import road.accident.driverservice.roadaccidentdriver.mapper.DriverMapper;
 import road.accident.driverservice.roadaccidentdriver.repository.DriverRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class DriverService {
     private final DriverRepository repository;
+    private final DriverMapper mapper;
 
-    public List<DriverEntity> getAllDrivers() {
-        return repository.findAll();
+    public List<DriverDTO> getAllDrivers() {
+        return mapper.conveter(repository.findAll());
     }
 
     public DriverDTO getDriverById(Long id) {
         var driverEntity = getDriverEntityById(id);
-        return DriverMapper.INSTANCE.toDto(driverEntity);
-
+        return mapper.driverToDriverDto(driverEntity);
     }
 
     public void create(DriverDTO dto) {
-        var driverEntity = DriverMapper.INSTANCE.toEntity(dto);
-        repository.save(driverEntity);
+        repository.save(mapper.toEntity(dto));
     }
 
-    public void updateDriver(Long id, DriverDTO dto) {
-        var driver = getDriverEntityById(id);
-        driver.setDriverFrom(dto.getDriverFrom());
-        driver.setName(dto.getName());
-        repository.save(driver);
-    }
-
-    public void deleteDriver(Long id) {
-        var driver = getDriverEntityById(id);
-        driver.setCanDrive(false);
-        repository.save(driver);
-    }
 
     public DriverEntity getDriverEntityById(Long id) {
         var optionalDriver = repository.findById(id);
         if (optionalDriver.isEmpty()) {
-            log.error("getDriverById.out - player with ID {} not found", id);
-            throw new DriverNotFoundException(String.format("Player with id %s not found", id));
+            log.error("getDriverById.out - Driver with ID {} not found", id);
+            throw new DriverNotFoundException(String.format("Driver with id %s not found", id));
         }
         return optionalDriver.get();
     }

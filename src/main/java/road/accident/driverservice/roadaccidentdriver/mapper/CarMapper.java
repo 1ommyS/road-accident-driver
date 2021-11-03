@@ -1,6 +1,7 @@
 package road.accident.driverservice.roadaccidentdriver.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 import road.accident.driverservice.roadaccidentdriver.dto.CarDTO;
 import road.accident.driverservice.roadaccidentdriver.dto.DriverDTO;
 import road.accident.driverservice.roadaccidentdriver.entity.CarEntity;
@@ -10,15 +11,10 @@ import java.util.List;
 
 
 @Mapper(componentModel = "spring")
-public interface DriverMapper {
-    DriverDTO driverToDriverDto(DriverEntity driver);
+public interface CarMapper {
+    CarDTO toDto(CarEntity car);
+    List<CarDTO> conveter(List<CarEntity> carEntities);
 
-    List<DriverDTO> conveter(List<DriverEntity> driverEntities);
-
-    List<CarDTO> convertList(List<CarEntity> cars);
-
-    CarDTO map(CarEntity value);
-
-    DriverEntity toEntity(DriverDTO dto);
+    CarEntity toEntity(CarDTO dto);
 }
 
